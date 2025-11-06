@@ -5,6 +5,8 @@ import './CheckoutPage.css';
 export function CheckoutPage(){
 	return (
 		<>
+			<title>Shop-Checkout</title>
+
 			<div class="checkout-header">
 				<div class="header-content">
 					<div class="checkout-header-left-section">

@@ -4,6 +4,7 @@ import './OrdersPage.css';
 export function OrdersPage() {
 	return (
 		<>
+			<title>Shop-Orders</title>
 			<Header />
 
 			<div class="orders-page">
