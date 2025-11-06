@@ -10,34 +10,25 @@ import { Header } from './components/Header';
 
 function App() {
   const [cart, setCart] = useState([]);
-	const [products, setAllProducts] = useState([]);
 	
   async function fetchCart() {
-		let items = await fetch("/api/cart-items");
+		let items = await fetch("/api/cart-items?expand=product");
 		items = await items.json();
-    // console.log(items);
+    // console.log(items[0]);
 		setCart(items);
 	}
-  async function fetchProducts() {
-    let prods = await fetch("/api/products");
-    prods = await prods.json();
-    // console.log(prods[0]);
-    setAllProducts(prods);
-  }
-
   useEffect(()=>{ fetchCart(); }, []);
-  useEffect(()=>{ fetchProducts(); }, []);
   
   const HeaderElem = <Header cart={cart} />;
 
   return (
     <Routes>
       <Route index element={
-        <HomePage Header={HeaderElem} products={products} />
+        <HomePage Header={HeaderElem} />
       } />
 
       <Route path='checkout' element={
-        <CheckoutPage cart={cart} products={products} />
+        <CheckoutPage cart={cart} />
       } />
 
       <Route path='orders' element={

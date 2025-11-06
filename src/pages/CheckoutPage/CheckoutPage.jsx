@@ -5,10 +5,7 @@ import { PaymentBox } from './components/PaymentBox/PaymentBox';
 import { OrdersSummary } from './components/OrdersSummary/OrdersSummary';
 
 
-export function CheckoutPage({ cart, products }){
-	const cartProducts = cart.map((item)=>{
-		for (const p of products) if (p.id == item.productId) return p;
-	})
+export function CheckoutPage({ cart }){
 	return (
 		<>
 			<title>Shop-Checkout</title>
@@ -18,7 +15,7 @@ export function CheckoutPage({ cart, products }){
 				<div className="page-title">Review your order</div>
 
 				<div className="checkout-grid">
-					<OrdersSummary cartProducts={cartProducts} cart={cart} />
+					<OrdersSummary cart={cart} />
 					<PaymentBox />
 				</div>
 			</div>
