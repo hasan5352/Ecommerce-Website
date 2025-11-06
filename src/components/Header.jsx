@@ -1,17 +1,7 @@
-import { Link, NavLink } from 'react-router';
+import { NavLink } from 'react-router';
 import './header.css';
-import { useState, useEffect } from 'react';
 
-export function Header() {
-	const [cart, setCart] = useState([]);
-	
-	async function fetchCart() {
-		let items = await fetch("http://localhost:3000/api/cart-items");
-		items = await items.json();
-		setCart(items);
-	}
-	useEffect(()=>{ fetchCart(); }, [])
-	
+export function Header({ cart }) {
 	let cartQuantity = 0;
 	cart.forEach((item)=>{ cartQuantity += item.quantity; })
 
