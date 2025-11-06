@@ -1,7 +1,20 @@
 import { Link, NavLink } from 'react-router';
 import './header.css';
+import { useState, useEffect } from 'react';
 
 export function Header() {
+	const [cart, setCart] = useState([]);
+	
+	async function fetchCart() {
+		let items = await fetch("http://localhost:3000/api/cart-items");
+		items = await items.json();
+		setCart(items);
+	}
+	useEffect(()=>{ fetchCart(); }, [])
+	
+	let cartQuantity = 0;
+	cart.forEach((item)=>{ cartQuantity += item.quantity; })
+
 	return (
 		<div className="header">
 			<div className="left-section">
@@ -25,7 +38,7 @@ export function Header() {
 
 				<NavLink className="cart-link header-link" to="/checkout">
 					<img className="cart-icon" src="images/icons/cart-icon.png" />
-					<div className="cart-quantity">3</div>
+					<div className="cart-quantity"> {cartQuantity} </div>
 					<div className="cart-text">Cart</div>
 				</NavLink>
 			</div>
