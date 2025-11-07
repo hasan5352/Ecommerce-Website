@@ -3,7 +3,7 @@ import './CheckoutPage.css';
 import { CheckoutHeader } from './components/CheckoutHeader/CheckoutHeader';
 import { PaymentBox } from './components/PaymentBox/PaymentBox';
 import { OrdersSummary } from './components/OrdersSummary/OrdersSummary';
-
+import { useState, useEffect } from 'react';
 
 export function CheckoutPage({ cart }){
 	return (

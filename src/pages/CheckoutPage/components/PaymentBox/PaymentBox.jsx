@@ -1,3 +1,4 @@
+import './PaymentBox.css'
 
 export function PaymentBox() {
 	return (

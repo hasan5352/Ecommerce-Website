@@ -1,9 +1,23 @@
 import { DeliveryOption } from "./DeliveryOption";
+import { useState, useEffect } from "react";
+import dayjs from "dayjs";
+import './CartItem.css'
 
-export function CartItem({ productImg, title, price, quantity }){
+export function CartItem({ productImg, title, price, quantity, creationDate, productId }){
+	const [deliveryOpts, setdeliveryOpts] = useState([]);
+	let [selectedDate, setSelectedDate] = useState("");
+
+	async function fetchDeliveryOptions(){
+		let delOpts = await fetch("/api/delivery-options");
+		delOpts = await delOpts.json();
+		// console.log(delOpts[0])
+		setdeliveryOpts(delOpts);
+	}
+	useEffect(() => {fetchDeliveryOptions()}, []);
+	
   return (
 		<div className="cart-item-container">
-			<div className="delivery-date"> Delivery date: Tuesday, June 21 </div>
+			<div className="delivery-date"> Delivery date: {selectedDate} </div>
 
 			<div className="cart-item-details-grid">
 				<img className="product-image" src={productImg} />
@@ -21,9 +35,18 @@ export function CartItem({ productImg, title, price, quantity }){
 
 				<div className="delivery-options">
 					<div className="delivery-options-title"> Choose a delivery option: </div>
-					<DeliveryOption date="Tuesday, June 21" price={"FREE"} />
-					<DeliveryOption date="Wednesday, June 15" price={"$4.99"} />
-					<DeliveryOption date="Monday, June 13" price={"$9.99"} />
+					
+					{deliveryOpts.map((d) => {
+						const cost = (d.priceCents === 0)? "Free" : d.priceCents / 100;
+						const delDate = dayjs(creationDate).add(d.deliveryDays, 'day').format("dddd, MMMM D");
+						
+						return (
+							<DeliveryOption date={delDate} price={cost} setSelectedDate={setSelectedDate}
+								key={d.id} productId={productId} isChecked={d.priceCents === 0}
+							/>
+						)
+					})}
+
 				</div>
 			</div>
 		</div>
