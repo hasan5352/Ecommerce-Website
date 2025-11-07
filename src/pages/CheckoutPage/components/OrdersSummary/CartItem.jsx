@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import './CartItem.css'
 
-export function CartItem({ productImg, title, price, quantity, creationDate, productId }){
+export function CartItem({ item }){
 	const [deliveryOpts, setdeliveryOpts] = useState([]);
 	let [selectedDate, setSelectedDate] = useState("");
 
@@ -20,14 +20,14 @@ export function CartItem({ productImg, title, price, quantity, creationDate, pro
 			<div className="delivery-date"> Delivery date: {selectedDate} </div>
 
 			<div className="cart-item-details-grid">
-				<img className="product-image" src={productImg} />
+				<img className="product-image" src={item.product.image} />
 
 				<div className="cart-item-details">
-					<div className="product-name"> {title} </div>
-					<div className="product-price"> ${price} </div>
+					<div className="product-name"> {item.product.name} </div>
+					<div className="product-price"> ${item.product.priceCents / 100} </div>
 
 					<div className="product-quantity">
-						<span> Quantity: <span className="quantity-label">{quantity}</span> </span>
+						<span> Quantity: <span className="quantity-label">{item.quantity}</span> </span>
 						<span className="update-quantity-link link-primary"> Update </span>
 						<span className="delete-quantity-link link-primary"> Delete </span>
 					</div>
@@ -38,11 +38,11 @@ export function CartItem({ productImg, title, price, quantity, creationDate, pro
 					
 					{deliveryOpts.map((d) => {
 						const cost = (d.priceCents === 0)? "Free" : d.priceCents / 100;
-						const delDate = dayjs(creationDate).add(d.deliveryDays, 'day').format("dddd, MMMM D");
+						const delDate = dayjs(item.createdAt).add(d.deliveryDays, 'day').format("dddd, MMMM D");
 						
 						return (
 							<DeliveryOption date={delDate} price={cost} setSelectedDate={setSelectedDate}
-								key={d.id} productId={productId} isChecked={d.priceCents === 0}
+								key={d.id} productId={item.productId} isChecked={d.priceCents === 0}
 							/>
 						)
 					})}
