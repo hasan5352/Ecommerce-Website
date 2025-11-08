@@ -1,30 +1,35 @@
 import './HomePage.css';
+import axios from 'axios';
+import { useRef } from 'react';
 
-export function Product({ title, productImg, ratingImg, reviews,  price }) {
+export function Product({ product, loadCart }) {
+	const buyQuantity = useRef(null);
+	
+	async function addProductToCart(){
+		await axios.post("/api/cart-items", { 
+			productId: product.id, 
+			quantity: parseInt(buyQuantity.current.value )
+		});
+		await loadCart();
+	}
+	
 	return (
 		<div className="product-container">
 			<div className="product-image-container">
-				<img className="product-image"
-					src={productImg} />
+				<img className="product-image" src={product.image} />
 			</div>
 
-			<div className="product-name limit-text-to-2-lines">
-				{title}
-			</div>
+			<div className="product-name limit-text-to-2-lines"> {product.name} </div>
 
 			<div className="product-rating-container">
-				<img className="product-rating-stars" src={ratingImg} />
-				<div className="product-rating-count link-primary">
-					{reviews}
-				</div>
+				<img className="product-rating-stars" src={`/images/ratings/rating-${product.rating.stars * 10}.png`} />
+				<div className="product-rating-count link-primary"> {product.rating.count} </div>
 			</div>
 
-			<div className="product-price">
-				${price}
-			</div>
+			<div className="product-price"> ${product.priceCents / 100} </div>
 
 			<div className="product-quantity-container">
-				<select>
+				<select ref={buyQuantity}>
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>
@@ -41,12 +46,11 @@ export function Product({ title, productImg, ratingImg, reviews,  price }) {
 			<div className="product-spacer"></div>
 
 			<div className="added-to-cart">
-				<img src="images/icons/checkmark.png" />
-				Added
+				<img src="images/icons/checkmark.png" /> Added
 			</div>
 
-			<button className="add-to-cart-button button-primary">
-				Add to Cart
+			<button className="add-to-cart-button button-primary" onClick={addProductToCart} > 
+				Add to Cart 
 			</button>
 		</div>	
 	);

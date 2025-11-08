@@ -1,21 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import './DeliveryOption.css'
+import dayjs from "dayjs";
+import axios from "axios";
 
-export function DeliveryOption({ date, price, productId, isChecked, setSelectedDate }){
-	if (isChecked) {
+export function DeliveryOption({ opt, productId, setSelectedDate, fetchPaymentSummary }){
+	if (opt.priceCents == 0) {
 		useEffect(()=>{
 			setSelectedDate(date);
 		}, [])
 	}
 
-	const displaySelectedDate = () => {setSelectedDate(date);}
+	const price = (opt.priceCents === 0)? "Free" : opt.priceCents / 100;
+	const date = dayjs().add(opt.deliveryDays, 'day').format("dddd, MMMM D");
+	const radio = useRef(null);
+
+	async function selectCurrentOption() {
+		setSelectedDate(date);
+		radio.current.checked = true;
+		await axios.put(`/api/cart-items/${productId}`, {deliveryOptionId: opt.id});
+		fetchPaymentSummary()
+	}
 
   return (
-		<div className="delivery-option">
+		<div className="delivery-option" onClick={selectCurrentOption}>
 			<input type="radio" className="delivery-option-input" 
 				name={`delivery-option-${productId}`}
-				defaultChecked={isChecked}
-				onClick={displaySelectedDate}
+				defaultChecked={opt.priceCents == 0} ref={radio}
 			/>
 
 			<div>

@@ -7,15 +7,15 @@ import { OrdersPage } from './pages/OrdersPage/OrdersPage';
 import { TrackingPage } from './pages/TrackingPage/TrackingPage';
 import { ErrorPage } from './pages/ErrorPage/ErrorPage';
 import { Header } from './components/Header';
+import axios from 'axios';
 
 function App() {
   const [cart, setCart] = useState([]);
 	
   async function fetchCart() {
-		let items = await fetch("/api/cart-items?expand=product");
-		items = await items.json();
-    // console.log(items[0]);
-		setCart(items);
+		let items = await axios.get("/api/cart-items?expand=product");
+    // console.log(items.data);
+		setCart(items.data);
 	}
   useEffect(()=>{ fetchCart(); }, []);
   
@@ -24,11 +24,11 @@ function App() {
   return (
     <Routes>
       <Route index element={
-        <HomePage Header={HeaderElem} />
+        <HomePage Header={HeaderElem} loadCart={fetchCart} />
       } />
 
       <Route path='checkout' element={
-        <CheckoutPage cart={cart} />
+        <CheckoutPage cart={cart} loadCart={fetchCart} />
       } />
 
       <Route path='orders' element={

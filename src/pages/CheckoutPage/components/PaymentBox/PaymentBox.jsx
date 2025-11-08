@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react';
 import './PaymentBox.css'
 
-export function PaymentBox() {
-	const [paymentSummary, setPaymentSummary] = useState(null);
-	async function fetchPaymentSummary() {
-		let data = await fetch("/api/payment-summary");
-		data = await data.json();
-		// console.log(data)
-		setPaymentSummary(data);
-	}
+export function PaymentBox({ paymentSummary, fetchPaymentSummary }) {
+	
 	useEffect(()=>{
 		fetchPaymentSummary();
 	}, []);

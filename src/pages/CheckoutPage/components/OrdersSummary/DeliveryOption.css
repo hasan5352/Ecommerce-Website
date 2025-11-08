@@ -3,6 +3,7 @@
   display: grid;
   grid-template-columns: 24px 1fr;
   margin-bottom: 12px;
+  cursor: pointer;
 }
 
 .checkout-page .delivery-option-input {
@@ -11,7 +12,6 @@
 }
 
 .checkout-page .delivery-option-date {
-
   font-weight: 500;
   margin-bottom: 3px;
 }

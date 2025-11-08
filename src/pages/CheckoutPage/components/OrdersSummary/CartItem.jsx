@@ -1,9 +1,9 @@
 import { DeliveryOption } from "./DeliveryOption";
 import { useState, useEffect } from "react";
-import dayjs from "dayjs";
+import axios from "axios";
 import './CartItem.css'
 
-export function CartItem({ item }){
+export function CartItem({ item, loadCart, fetchPaymentSummary }){
 	const [deliveryOpts, setdeliveryOpts] = useState([]);
 	let [selectedDate, setSelectedDate] = useState("");
 
@@ -15,6 +15,12 @@ export function CartItem({ item }){
 	}
 	useEffect(() => {fetchDeliveryOptions()}, []);
 	
+	async function deleteCartItem(){
+		await axios.delete(`/api/cart-items/${item.productId}`)
+		await loadCart();
+		fetchPaymentSummary();
+	}
+
   return (
 		<div className="cart-item-container">
 			<div className="delivery-date"> Delivery date: {selectedDate} </div>
@@ -29,24 +35,16 @@ export function CartItem({ item }){
 					<div className="product-quantity">
 						<span> Quantity: <span className="quantity-label">{item.quantity}</span> </span>
 						<span className="update-quantity-link link-primary"> Update </span>
-						<span className="delete-quantity-link link-primary"> Delete </span>
+						<span className="delete-quantity-link link-primary" onClick={deleteCartItem}> Delete </span>
 					</div>
 				</div>
 
 				<div className="delivery-options">
 					<div className="delivery-options-title"> Choose a delivery option: </div>
-					
-					{deliveryOpts.map((d) => {
-						const cost = (d.priceCents === 0)? "Free" : d.priceCents / 100;
-						const delDate = dayjs(item.createdAt).add(d.deliveryDays, 'day').format("dddd, MMMM D");
-						
-						return (
-							<DeliveryOption date={delDate} price={cost} setSelectedDate={setSelectedDate}
-								key={d.id} productId={item.productId} isChecked={d.priceCents === 0}
-							/>
-						)
-					})}
-
+						{deliveryOpts.map((d) => 
+							<DeliveryOption opt={d} setSelectedDate={setSelectedDate} key={d.id} 
+								productId={item.productId} fetchPaymentSummary={fetchPaymentSummary} /> 
+						)}
 				</div>
 			</div>
 		</div>

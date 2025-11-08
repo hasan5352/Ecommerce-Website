@@ -2,7 +2,7 @@ import './HomePage.css';
 import { Product } from './Product';
 import { useState, useEffect } from 'react';
 
-export function HomePage({ Header }){
+export function HomePage({ Header, loadCart }){
 	const [products, setAllProducts] = useState([]);
 	
 	async function fetchProducts() {
@@ -18,15 +18,7 @@ export function HomePage({ Header }){
 			{Header}
 
 			<div className="products-grid home-page">
-
-				{products.map((p) => (
-					<Product productImg={p.image}
-						title={p.name}
-						ratingImg={`images/ratings/rating-${p.rating.stars * 10}.png`}
-						reviews={p.rating.count} price={p.priceCents / 100} key={p.id}
-					/>
-				))}
-			
+				{products.map(p => <Product loadCart={loadCart} product={p} key={p.id} /> )}
 			</div>
 		</>
 	);
