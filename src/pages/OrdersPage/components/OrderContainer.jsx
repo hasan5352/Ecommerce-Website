@@ -23,7 +23,7 @@ export function OrderContainer({ order }) {
 			</div>
 
 			<div className="order-details-grid">
-				{order.products.map(p =>  <OrderItem key={p.productId} item={p} /> )}
+				{order.products.map(p =>  <OrderItem key={p.productId} item={p} orderId={order.id} /> )}
 			</div>
 		</div>
 	);

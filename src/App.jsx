@@ -35,7 +35,7 @@ function App() {
         <OrdersPage Header={HeaderElem} />
       } />
 
-      <Route path='tracking' element={
+      <Route path='/tracking/:orderId/:productId' element={
         <TrackingPage Header={HeaderElem} />
       } />
 

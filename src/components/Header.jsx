@@ -9,7 +9,7 @@ export function Header({ cart }) {
 		<div className="header">
 			<div className="left-section">
 				<NavLink to="/" className="header-link">
-					<img className="logo" src="shop-icon.png" />
+					<img className="logo" src="/shop-icon.png" />
 				</NavLink>
 			</div>
 
@@ -17,7 +17,7 @@ export function Header({ cart }) {
 				<input className="search-bar" type="text" placeholder="Search" />
 
 				<button className="search-button">
-					<img className="search-icon" src="images/icons/search-icon.png" />
+					<img className="search-icon" src="/images/icons/search-icon.png" />
 				</button>
 			</div>
 
@@ -27,7 +27,7 @@ export function Header({ cart }) {
 				</NavLink>
 
 				<NavLink className="cart-link header-link" to="/checkout">
-					<img className="cart-icon" src="images/icons/cart-icon.png" />
+					<img className="cart-icon" src="/images/icons/cart-icon.png" />
 					<div className="cart-quantity"> {cartQuantity} </div>
 					<div className="cart-text">Cart</div>
 				</NavLink>
