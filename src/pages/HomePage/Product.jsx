@@ -1,17 +1,9 @@
 import './HomePage.css';
-import axios from 'axios';
 import { useRef } from 'react';
+import { QuantityDropdown } from '../../components/QuantityDropdown';
 
-export function Product({ product, loadCart }) {
+export function Product({ product, addProductToCart }) {
 	const buyQuantity = useRef(null);
-	
-	async function addProductToCart(){
-		await axios.post("/api/cart-items", { 
-			productId: product.id, 
-			quantity: parseInt(buyQuantity.current.value )
-		});
-		await loadCart();
-	}
 	
 	return (
 		<div className="product-container">
@@ -29,18 +21,7 @@ export function Product({ product, loadCart }) {
 			<div className="product-price"> ${product.priceCents / 100} </div>
 
 			<div className="product-quantity-container">
-				<select ref={buyQuantity}>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-				</select>
+				<QuantityDropdown ref={buyQuantity} />
 			</div>
 
 			<div className="product-spacer"></div>
@@ -49,7 +30,8 @@ export function Product({ product, loadCart }) {
 				<img src="images/icons/checkmark.png" /> Added
 			</div>
 
-			<button className="add-to-cart-button button-primary" onClick={addProductToCart} > 
+			<button className="add-to-cart-button button-primary" 
+				onClick={()=>{addProductToCart(product.id, buyQuantity.current.value)}} > 
 				Add to Cart 
 			</button>
 		</div>	

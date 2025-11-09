@@ -13,6 +13,7 @@ export function CheckoutPage({ cart, loadCart }){
 		// console.log(data)
 		setPaymentSummary(data);
 	}
+	
 	return (
 		<>
 			<title>Shop-Checkout</title>
@@ -23,7 +24,8 @@ export function CheckoutPage({ cart, loadCart }){
 
 				<div className="checkout-grid">
 					<OrdersSummary loadCart={loadCart} cart={cart} fetchPaymentSummary={fetchPaymentSummary} />
-					<PaymentBox paymentSummary={paymentSummary} fetchPaymentSummary={fetchPaymentSummary} />
+					<PaymentBox paymentSummary={paymentSummary} fetchPaymentSummary={fetchPaymentSummary} 
+						loadCart={loadCart}	/>
 				</div>
 			</div>
 		</>

@@ -1,24 +1,28 @@
 import './HomePage.css';
 import { Product } from './Product';
 import { useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router';
 
-export function HomePage({ Header, loadCart }){
+import axios from 'axios';
+
+export function HomePage({ Header, addProductToCart }){
 	const [products, setAllProducts] = useState([]);
+	const location = useLocation();
+	let q = (location.search)? location.search : "";
 	
 	async function fetchProducts() {
-		let prods = await fetch("/api/products");
-		prods = await prods.json();
+		let prods = await axios.get(`/api/products/${q}`);
 		// console.log(prods[0]);
-		setAllProducts(prods);
+		setAllProducts(prods.data);
 	}
-	useEffect(()=>{ fetchProducts(); }, []);
+	useEffect(()=>{ fetchProducts(); }, [q]);
 
 	return (
 		<>
 			{Header}
 
 			<div className="products-grid home-page">
-				{products.map(p => <Product loadCart={loadCart} product={p} key={p.id} /> )}
+				{products.map(p => <Product addProductToCart={addProductToCart} product={p} key={p.id} /> )}
 			</div>
 		</>
 	);

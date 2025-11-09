@@ -18,13 +18,18 @@ function App() {
 		setCart(items.data);
 	}
   useEffect(()=>{ fetchCart(); }, []);
-  
+
+  async function addProductToCart(id, quantity){
+		await axios.post("/api/cart-items", { productId: id, quantity: Number(quantity) });
+		await fetchCart();
+	}
+
   const HeaderElem = <Header cart={cart} />;
 
   return (
     <Routes>
       <Route index element={
-        <HomePage Header={HeaderElem} loadCart={fetchCart} />
+        <HomePage Header={HeaderElem} addProductToCart={addProductToCart} />
       } />
 
       <Route path='checkout' element={
@@ -32,7 +37,7 @@ function App() {
       } />
 
       <Route path='orders' element={
-        <OrdersPage Header={HeaderElem} />
+        <OrdersPage Header={HeaderElem} addProductToCart={addProductToCart} />
       } />
 
       <Route path='/tracking/:orderId/:productId' element={

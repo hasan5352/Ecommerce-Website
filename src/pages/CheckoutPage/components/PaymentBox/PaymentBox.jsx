@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react';
 import './PaymentBox.css'
+import axios from 'axios';
+import { useNavigate } from 'react-router';
 
-export function PaymentBox({ paymentSummary, fetchPaymentSummary }) {
-	
+export function PaymentBox({ paymentSummary, fetchPaymentSummary, loadCart }) {
 	useEffect(()=>{
 		fetchPaymentSummary();
 	}, []);
+
+	const navigate = useNavigate();
+	async function createOrder(params) {
+		await axios.post("/api/orders");
+		await loadCart();
+		navigate("/orders");
+	}
 
 	if (paymentSummary == null) return;
 	return (
@@ -37,7 +45,7 @@ export function PaymentBox({ paymentSummary, fetchPaymentSummary }) {
 				<div className="payment-summary-money">${paymentSummary.totalCostCents / 100} </div>
 			</div>
 
-			<button className="place-order-button button-primary"> Place your order </button>
+			<button className="place-order-button button-primary" onClick={createOrder}> Place your order </button>
 		</div>	
 	);
 }

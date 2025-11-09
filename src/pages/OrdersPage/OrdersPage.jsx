@@ -3,7 +3,7 @@ import './OrdersPage.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export function OrdersPage({ Header }) {
+export function OrdersPage({ Header, addProductToCart }) {
 	const [orders, setOrders] = useState(null);
 
 	useEffect(()=>{
@@ -23,7 +23,7 @@ export function OrdersPage({ Header }) {
 				<div className="page-title">Your Orders</div>
 
 				<div className="orders-grid">
-					{orders.map( o => <OrderContainer order={o} key={o.id} /> )}
+					{orders.map( o => <OrderContainer addProductToCart={addProductToCart} order={o} key={o.id} /> )}
 				</div>
 			</div>
 		</>

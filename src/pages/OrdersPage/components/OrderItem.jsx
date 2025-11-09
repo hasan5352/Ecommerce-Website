@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
 import { Link } from "react-router";
+import axios from "axios";
 
-export function OrderItem({ item, orderId }) {
+export function OrderItem({ item, orderId, addProductToCart }) {
+	
 	return (
 		<>
 			<div className="product-image-container">
@@ -15,9 +17,10 @@ export function OrderItem({ item, orderId }) {
 				</div>
 				<div className="product-quantity"> Quantity: {item.quantity} </div>
 
-				<button className="buy-again-button button-primary">
+				<button className="buy-again-button button-primary" 
+					onClick={()=>{addProductToCart(item.productId, item.quantity)}} >
 					<img className="buy-again-icon" src="images/icons/buy-again.png" />
-					<span className="buy-again-message">Add to Cart</span>
+					<span className="buy-again-message"> Re-order </span>
 				</button>
 			</div>
 
