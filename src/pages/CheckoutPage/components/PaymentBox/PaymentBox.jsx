@@ -1,13 +1,8 @@
-import { useEffect, useState } from 'react';
 import './PaymentBox.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 
-export function PaymentBox({ paymentSummary, fetchPaymentSummary, loadCart }) {
-	useEffect(()=>{
-		fetchPaymentSummary();
-	}, []);
-
+export function PaymentBox({ paymentSummary, loadCart }) {
 	const navigate = useNavigate();
 	async function createOrder(params) {
 		await axios.post("/api/orders");

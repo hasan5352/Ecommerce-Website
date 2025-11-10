@@ -4,7 +4,8 @@ import { QuantityDropdown } from '../../components/QuantityDropdown';
 
 export function Product({ product, addProductToCart }) {
 	const buyQuantity = useRef(null);
-	
+	const addedToCartElem = useRef(null)
+
 	return (
 		<div className="product-container">
 			<div className="product-image-container">
@@ -19,19 +20,20 @@ export function Product({ product, addProductToCart }) {
 			</div>
 
 			<div className="product-price"> ${product.priceCents / 100} </div>
-
-			<div className="product-quantity-container">
-				<QuantityDropdown ref={buyQuantity} />
-			</div>
+			<div className="product-quantity-container"> <QuantityDropdown ref={buyQuantity} /> </div>
 
 			<div className="product-spacer"></div>
 
-			<div className="added-to-cart">
+			<div ref={addedToCartElem} className="added-to-cart">
 				<img src="images/icons/checkmark.png" /> Added
 			</div>
 
 			<button className="add-to-cart-button button-primary" 
-				onClick={()=>{addProductToCart(product.id, buyQuantity.current.value)}} > 
+				onClick={async ()=>{
+					await addProductToCart(product.id, buyQuantity.current.value)
+					addedToCartElem.current.classList.add("opacity-1");
+					setTimeout(()=>{ addedToCartElem.current.classList.remove("opacity-1") }, 2000);
+				}} > 
 				Add to Cart 
 			</button>
 		</div>	

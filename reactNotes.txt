@@ -1,0 +1,42 @@
+-> Components: Functions defined in PascalCase.
+    - 2 types of component structuring: Atomic and Feature based
+    
+-> Composition: Html like syntax with nested components:
+    <HomePage>
+        <Header />
+        <Sidebar />
+        <Footer />
+    </HomePage>
+
+    - Used to render nested elements in given order using prop.children special property:
+    - function HomePage({ children }) {
+        return {children};
+      }
+
+-> localStorage object: 
+    - obj to access small storage given to each independant website
+    - used to cache small amount of data to avoid api calls
+
+-> useEffect(callback, depsArray):
+    - executes callback: 
+        > after each render if deps not provided.
+        > only in those renders where deps changes.
+        > only in the first render if deps=[].
+
+-> x = useRef(init value or callBack that returns an init value):
+    - passed to ref attribute of an element to access it like DOM
+    - To store a state-like value when we do not want re-renders
+    - use x.current key to access the element or value
+
+-> useMemo(callback to calculate a value dependant on deps, depsArray): cache values.
+-> useCallback(callback to return a function dependant on deps, depsArray): cache functions
+-> React.memo: wrap components who are to be rendered only if their props change
+
+-> [x, setX] useState(init value or callBack that returns an init value):
+    - x is state. setX is updater. Whenever updater is executed, the components using state are re-rendered.
+    - use it along with useEffect mostly to avoid infinite re-rendering loops.
+
+-> navigate = useNavigate(): navigate func is used to redirect to routes.
+-> location = useLocation(): location obj is used to get url-query params
+-> params = useParams: params obj is used to get url-path params
+

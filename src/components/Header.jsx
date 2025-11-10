@@ -1,16 +1,13 @@
 import { NavLink, useNavigate } from 'react-router';
 import './header.css';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 export function Header({ cart }) {
-	let cartQuantity = 0;
-	cart.forEach((item)=>{ cartQuantity += item.quantity; })
+	let cartQuantity = useMemo(()=> cart.reduce((total, item) => total + item.quantity, 0), [cart]);
 
 	let searchBar = useRef(null);
 	const navigate = useNavigate();
-	async function searchProducts(){
-		navigate(`/?search=${searchBar.current.value.trim()}`);
-	}
+	const searchProducts = () => { navigate(`/?search=${searchBar.current.value.trim()}`) }
 
 	return (
 		<div className="header">

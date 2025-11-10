@@ -10,22 +10,40 @@ import { Header } from './components/Header';
 import axios from 'axios';
 
 function App() {
-  const [cart, setCart] = useState([]);
-	
-  async function fetchCart() {
-		let items = await axios.get("/api/cart-items?expand=product");
-    // console.log(items.data);
-		setCart(items.data);
-	}
-  useEffect(()=>{ fetchCart(); }, []);
+  const [cart, setCart] = useState(()=>{
+    const saved = localStorage.getItem("cart");
+    return saved? JSON.parse(saved) : null;
+  });
+  const [paymentSummary, setPaymentSummary] = useState(()=>{
+      const saved = JSON.parse(localStorage.getItem("totalPay"));
+      return saved? saved : null;
+  });
 
+  async function fetchPaymentSummary() {
+    const totalPay = await axios.get("/api/payment-summary");
+    setPaymentSummary(totalPay.data);
+    localStorage.setItem("totalPay", JSON.stringify(totalPay.data));
+    // console.log(totalPay.data);
+  }
+  async function fetchCart() {
+    let items = await axios.get("/api/cart-items?expand=product");
+    setCart(items.data);
+    localStorage.setItem("cart", JSON.stringify(items.data));
+    // console.log(items.data);
+  }
+  
+  useEffect(()=>{ if (!cart) fetchCart(); }, []);
+  useEffect(()=>{ if (!paymentSummary) fetchPaymentSummary(); }, []);
+    
   async function addProductToCart(id, quantity){
 		await axios.post("/api/cart-items", { productId: id, quantity: Number(quantity) });
 		await fetchCart();
+    await fetchPaymentSummary();
 	}
 
   const HeaderElem = <Header cart={cart} />;
 
+  if (!cart) return;
   return (
     <Routes>
       <Route index element={
@@ -33,7 +51,8 @@ function App() {
       } />
 
       <Route path='checkout' element={
-        <CheckoutPage cart={cart} loadCart={fetchCart} />
+        <CheckoutPage cart={cart} loadCart={fetchCart} 
+          fetchPaymentSummary={fetchPaymentSummary} paymentSummary={paymentSummary} />
       } />
 
       <Route path='orders' element={

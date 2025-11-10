@@ -1,8 +1,8 @@
 import './CheckoutHeader.css';
+import { useMemo } from 'react';
 
 export function CheckoutHeader({cart}) {
-	let numItems = 0;
-	cart.forEach(item => { numItems += item.quantity; });
+	let cartQuantity = useMemo(()=> cart.reduce((total, item) => total + item.quantity, 0), [cart]);
 	
 	return (
 		<div className="checkout-header">
@@ -13,7 +13,7 @@ export function CheckoutHeader({cart}) {
 					</a>
 				</div>
 
-				<div className="checkout-header-middle-section"> Checkout: {numItems} items </div>
+				<div className="checkout-header-middle-section"> Checkout: {cartQuantity} items </div>
 
 				<div className="checkout-header-right-section">
 					<img src="images/icons/checkout-lock-icon.png" />
