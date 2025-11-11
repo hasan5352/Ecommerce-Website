@@ -8,7 +8,8 @@ export default defineConfig({
     proxy: { '/api' : { target: "http://localhost:3000" } }
   },
   build: {
-    sourcemap: false
+    sourcemap: false,
+    outDir: '../app-backend/dist'
   }
 
 })
