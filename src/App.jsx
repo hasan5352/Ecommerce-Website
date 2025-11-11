@@ -10,11 +10,12 @@ import PaymentProvider from './context/PaymentProvider';
 import CartProvider from './context/CartProvider';
 
 function App() {
+  const HeaderElem = <CartProvider> <Header /> </CartProvider>;
   return (
     <Routes>
       <Route index element={
         <CartProvider>
-          <PaymentProvider> <HomePage Header={<Header />} /> </PaymentProvider>
+          <PaymentProvider> <HomePage Header={HeaderElem} /> </PaymentProvider>
         </CartProvider>
       } />
 
@@ -26,16 +27,16 @@ function App() {
 
       <Route path='orders' element={
         <CartProvider>
-          <PaymentProvider> <OrdersPage Header={<Header />} /> </PaymentProvider>
+          <PaymentProvider> <OrdersPage Header={HeaderElem} /> </PaymentProvider>
         </CartProvider>
       } />
 
       <Route path='/tracking/:orderId/:productId' element={
-        <TrackingPage Header={<Header />} />
+        <TrackingPage Header={HeaderElem} />
       } />
 
       <Route path='*' element={
-        <ErrorPage Header={<Header />} />
+        <ErrorPage Header={HeaderElem} />
       } />
 
     </Routes>

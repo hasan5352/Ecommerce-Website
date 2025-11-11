@@ -16,6 +16,7 @@ export default function PaymentProvider({ children }) {
   }
   useEffect(()=>{ if (!paymentSummary) fetchPaymentSummary(); }, []);
 
+  if (!paymentSummary) return;
   return (
     <PaymentContext.Provider value={{
       paymentSummary: paymentSummary, fetchPaymentSummary: fetchPaymentSummary

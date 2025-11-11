@@ -40,3 +40,18 @@
 -> location = useLocation(): location obj is used to get url-query params
 -> params = useParams: params obj is used to get url-path params
 
+-> Context API:
+1. Define ContextProvider component in contexts folder. This component holds the shared states, functions and data.
+- export SomeContext = createContext(default value): create a context object which can be used like html Tags.
+
+2. Inside ContextProvider do:- 
+    <SomeContext.Provider value={any data u want to be set as context}>
+        {children}
+    </ SomeContext.Provider>
+3. Wrap a Parent component inside Context provider component:
+    <ContextProvider>
+        <HomePage />
+    </ <ContextProvider>
+
+4. Inside a child component of HomePage which is using the context data do:
+    - { data } = useContext(SomeContext);

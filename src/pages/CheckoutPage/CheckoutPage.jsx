@@ -4,8 +4,7 @@ import CheckoutHeader from './components/CheckoutHeader/CheckoutHeader';
 import PaymentBox from './components/PaymentBox/PaymentBox';
 import OrdersSummary from './components/OrdersSummary/OrdersSummary';
 
-export default function CheckoutPage({ cart, loadCart, paymentSummary, fetchPaymentSummary  }){
-	if (!paymentSummary) return;
+export default function CheckoutPage(){
 	return (
 		<>
 			<title>Shop-Checkout</title>
