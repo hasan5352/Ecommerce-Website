@@ -1,10 +1,14 @@
 import './HomePage.css';
-import { useRef } from 'react';
-import { QuantityDropdown } from '../../components/QuantityDropdown';
+import { useContext, useRef } from 'react';
+import QuantityDropdown from '../../components/QuantityDropdown';
+import { CartContext } from '../../context/CartProvider';
+import { PaymentContext } from '../../context/PaymentProvider'
 
-export function Product({ product, addProductToCart }) {
+export default function Product({ product }) {
 	const buyQuantity = useRef(null);
 	const addedToCartElem = useRef(null)
+	const {addProductToCartInBackend, loadCart} = useContext(CartContext);
+	const {fetchPaymentSummary} = useContext(PaymentContext);
 
 	return (
 		<div className="product-container">
@@ -30,7 +34,9 @@ export function Product({ product, addProductToCart }) {
 
 			<button className="add-to-cart-button button-primary" 
 				onClick={async ()=>{
-					await addProductToCart(product.id, buyQuantity.current.value)
+					await addProductToCartInBackend(product.id, buyQuantity.current.value);
+					loadCart(); fetchPaymentSummary();
+					
 					addedToCartElem.current.classList.add("opacity-1");
 					setTimeout(()=>{ addedToCartElem.current.classList.remove("opacity-1") }, 2000);
 				}} > 

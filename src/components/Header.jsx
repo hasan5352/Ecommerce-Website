@@ -1,8 +1,11 @@
 import { NavLink, useNavigate } from 'react-router';
 import './header.css';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useContext } from 'react';
+import { CartContext } from '../context/CartProvider';
 
-export function Header({ cart }) {
+export default function Header() {
+	const { cart } = useContext(CartContext);
+
 	let cartQuantity = useMemo(()=> cart.reduce((total, item) => total + item.quantity, 0), [cart]);
 
 	let searchBar = useRef(null);

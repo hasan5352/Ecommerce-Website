@@ -1,7 +1,9 @@
+import { CartContext } from '../../../../context/CartProvider';
 import './CheckoutHeader.css';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 
-export function CheckoutHeader({cart}) {
+export default function CheckoutHeader() {
+	const { cart } = useContext(CartContext);
 	let cartQuantity = useMemo(()=> cart.reduce((total, item) => total + item.quantity, 0), [cart]);
 	
 	return (

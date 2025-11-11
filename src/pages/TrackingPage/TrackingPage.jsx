@@ -5,7 +5,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import { Link } from 'react-router';
 
-export function TrackingPage({ Header }) {
+export default function TrackingPage({ Header }) {
 	const {orderId, productId} = useParams();
 	const [product, setProduct] = useState(null);
 	const [deliveryPercent, setdeliveryPercent] = useState(null);

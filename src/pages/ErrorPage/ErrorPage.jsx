@@ -1,6 +1,6 @@
 import './ErrorPage.css';
 
-export function ErrorPage({ Header }) {
+export default function ErrorPage({ Header }) {
 	return (
 		<>
 			{Header}

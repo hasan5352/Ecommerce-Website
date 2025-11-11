@@ -1,9 +1,15 @@
 import './PaymentBox.css'
 import axios from 'axios';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router';
+import { CartContext } from '../../../../context/CartProvider';
+import { PaymentContext } from '../../../../context/PaymentProvider';
 
-export function PaymentBox({ paymentSummary, loadCart }) {
+export default function PaymentBox() {
 	const navigate = useNavigate();
+	const { paymentSummary } = useContext(PaymentContext);
+	const { loadCart } = useContext(CartContext);
+	
 	async function createOrder(params) {
 		await axios.post("/api/orders");
 		await loadCart();

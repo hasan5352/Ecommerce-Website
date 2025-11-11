@@ -1,13 +1,17 @@
-import { DeliveryOption } from "./DeliveryOption";
-import { useState, useEffect, useRef } from "react";
+import DeliveryOption from "./DeliveryOption";
+import { useState, useEffect, useRef, useContext } from "react";
 import axios from "axios";
 import './CartItem.css'
-import { QuantityDropdown } from '../../../../components/QuantityDropdown'
-
-export function CartItem({ item, loadCart, fetchPaymentSummary }){
+import QuantityDropdown from '../../../../components/QuantityDropdown'
+import { CartContext } from "../../../../context/CartProvider";
+import { PaymentContext } from '../../../../context/PaymentProvider';
+									      
+export default function CartItem({ item }){
 	const [deliveryOpts, setdeliveryOpts] = useState([]);
 	const [selectedDate, setSelectedDate] = useState("");
 	const [isEditing, setIsEditing] = useState(false);
+	const { loadCart } = useContext(CartContext);
+	const { fetchPaymentSummary } = useContext(PaymentContext);
 
 	async function fetchDeliveryOptions(){
 		let delOpts = await fetch("/api/delivery-options");
@@ -18,12 +22,12 @@ export function CartItem({ item, loadCart, fetchPaymentSummary }){
 	
 	async function deleteCartItem(){
 		await axios.delete(`/api/cart-items/${item.productId}`)
-		await loadCart();
+		loadCart();
 		fetchPaymentSummary();
 	}
 
 	useEffect(() => {fetchDeliveryOptions()}, []);
-
+													
 	const buyQuantity = useRef(null);
 	async function updateEditingState() {
 		if (isEditing) {
@@ -63,7 +67,7 @@ export function CartItem({ item, loadCart, fetchPaymentSummary }){
 					<div className="delivery-options-title"> Choose a delivery option: </div>
 						{deliveryOpts.map((d) => 
 							<DeliveryOption opt={d} setSelectedDate={setSelectedDate} key={d.id} 
-								productId={item.productId} fetchPaymentSummary={fetchPaymentSummary} /> 
+								productId={item.productId} /> 
 						)}
 				</div>
 			</div>

@@ -1,9 +1,13 @@
 import dayjs from "dayjs";
+import { useContext } from "react";
 import { Link } from "react-router";
-import axios from "axios";
+import { CartContext } from '../../../context/CartProvider';
+import { PaymentContext } from '../../../context/PaymentProvider';
 
-export function OrderItem({ item, orderId, addProductToCart }) {
-	
+export default function OrderItem({ item, orderId }) {
+	const {addProductToCartInBackend, loadCart} = useContext(CartContext);
+	const {fetchPaymentSummary} = useContext(PaymentContext);
+
 	return (
 		<>
 			<div className="product-image-container">
@@ -18,7 +22,10 @@ export function OrderItem({ item, orderId, addProductToCart }) {
 				<div className="product-quantity"> Quantity: {item.quantity} </div>
 
 				<button className="buy-again-button button-primary" 
-					onClick={()=>{addProductToCart(item.productId, item.quantity)}} >
+					onClick={async ()=>{
+						await addProductToCartInBackend(item.productId, item.quantity)
+						loadCart(); fetchPaymentSummary();
+					}} >
 					<img className="buy-again-icon" src="images/icons/buy-again.png" />
 					<span className="buy-again-message"> Re-order </span>
 				</button>

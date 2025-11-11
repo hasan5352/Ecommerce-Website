@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import { OrderItem } from "./OrderItem";
+import OrderItem from "./OrderItem";
 
-export function OrderContainer({ order, addProductToCart }) {
+export default function OrderContainer({ order }) {
   return (
 		<div className="order-container">
 			<div className="order-header">
@@ -23,7 +23,7 @@ export function OrderContainer({ order, addProductToCart }) {
 			</div>
 
 			<div className="order-details-grid">
-				{order.products.map(p =>  <OrderItem addProductToCart={addProductToCart} key={p.productId} 
+				{order.products.map(p =>  <OrderItem key={p.productId} 
 					item={p} orderId={order.id} /> 
 				)}
 			</div>
