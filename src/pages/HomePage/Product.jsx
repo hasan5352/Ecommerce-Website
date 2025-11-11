@@ -33,7 +33,7 @@ export default function Product({ product }) {
 				<img src="images/icons/checkmark.png" /> Added
 			</div>
 
-			<button className="add-to-cart-button button-primary" 
+			<button className="add-to-cart-button button-primary" data-testid="add-to-cart-button" 
 				onClick={async ()=>{
 					await addProductToCartInBackend(product.id, buyQuantity.current.value);
 					loadCart(); fetchPaymentSummary();
