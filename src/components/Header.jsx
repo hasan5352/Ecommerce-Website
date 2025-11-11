@@ -10,7 +10,10 @@ export default function Header() {
 
 	let searchBar = useRef(null);
 	const navigate = useNavigate();
-	const searchProducts = () => { navigate(`/?search=${searchBar.current.value.trim()}`) }
+	function displaySearchProducts(e) { 
+		if(e.key != 'Enter') return;
+		navigate(`/?search=${searchBar.current.value.trim()}`);
+	}
 
 	return (
 		<div className="header">
@@ -21,9 +24,10 @@ export default function Header() {
 			</div>
 
 			<div className="middle-section">
-				<input ref={searchBar} className="search-bar" type="text" placeholder="Search" />
+				<input ref={searchBar} className="search-bar" onKeyDown={displaySearchProducts}
+				type="text" placeholder="Search" />
 
-				<button className="search-button" onClick={searchProducts}>
+				<button className="search-button" onClick={displaySearchProducts}>
 					<img className="search-icon" src="/images/icons/search-icon.png" />
 				</button>
 			</div>

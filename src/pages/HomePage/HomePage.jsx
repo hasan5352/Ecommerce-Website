@@ -17,7 +17,7 @@ export default function HomePage({ Header }){
 		}
 		let prods = await axios.get(`/api/products/${q}`);
 		setAllProducts(prods.data);
-		localStorage.setItem("products"+q, JSON.stringify(prods.data));
+		if (prods.data.length) localStorage.setItem("products"+q, JSON.stringify(prods.data));
 	}
 	useEffect(()=>{ fetchProducts(); }, [q]);
 
@@ -25,8 +25,9 @@ export default function HomePage({ Header }){
 	return (
 		<>
 			{Header}
-
+			{products.length == 0 && <h1>No matching products to display!</h1>}
 			<div className="products-grid home-page">
+				
 				{products.map(p => <Product product={p} key={p.id} /> )}
 			</div>
 		</>
