@@ -7,6 +7,8 @@ router.get('/', async (req, res) => {
   let search = req.query.search;
   let products = await Product.findAll();
 
+  console.log(products.length);
+
   if (search) {
     search = search.toLowerCase();
 

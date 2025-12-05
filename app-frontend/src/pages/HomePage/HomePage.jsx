@@ -16,8 +16,9 @@ export default function HomePage({ Header }){
 			return;
 		}
 		let prods = await axios.get(`/api/products/${q}`);
+		console.log(prods.data.length);
 		setAllProducts(prods.data);
-		if (prods.data.length) localStorage.setItem("products"+q, JSON.stringify(prods.data));
+		// if (prods.data.length) localStorage.setItem("products"+q, JSON.stringify(prods.data));
 	}
 	useEffect(()=>{ fetchProducts(); }, [q]);
 
