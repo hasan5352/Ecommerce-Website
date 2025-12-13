@@ -101,5 +101,5 @@ if (productCount === 0) {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

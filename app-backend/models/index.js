@@ -4,10 +4,7 @@ import fs from 'fs';
 
 const isUsingRDS = process.env.RDS_HOSTNAME && process.env.RDS_USERNAME && process.env.RDS_PASSWORD;
 const dbType = process.env.DB_TYPE || 'mysql';
-const defaultPorts = {
-  mysql: 3306,
-  postgres: 5432,
-};
+const defaultPorts = { mysql: 3306, postgres: 5432 };
 const defaultPort = defaultPorts[dbType];
 
 export let sequelize;

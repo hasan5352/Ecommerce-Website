@@ -11,10 +11,7 @@ router.get('/', async (req, res) => {
   if (expand === 'estimatedDeliveryTime') {
     response = deliveryOptions.map(option => {
       const deliveryTimeMs = Date.now() + option.deliveryDays * 24 * 60 * 60 * 1000;
-      return {
-        ...option.toJSON(),
-        estimatedDeliveryTimeMs: deliveryTimeMs
-      };
+      return { ...option.toJSON(), estimatedDeliveryTimeMs: deliveryTimeMs };
     });
   }
 

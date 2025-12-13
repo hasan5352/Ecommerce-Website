@@ -5,7 +5,7 @@ export const Product = sequelize.define('Product', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
+    primaryKey: true 
   },
   image: {
     type: DataTypes.STRING,
@@ -40,7 +40,5 @@ export const Product = sequelize.define('Product', {
     type: DataTypes.DATE(3)
   },
 }, {
-  defaultScope: {
-    order: [['createdAt', 'ASC']]
-  }
+  defaultScope: { order: [['createdAt', 'ASC']] }
 });
