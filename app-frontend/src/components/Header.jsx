@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router';
-import './header.css';
+import './Header.css';
 import { useMemo, useRef, useContext } from 'react';
 import { CartContext } from '../context/CartProvider';
 
