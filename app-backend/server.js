@@ -7,7 +7,6 @@ import productRoutes from './routes/products.js';
 import deliveryOptionRoutes from './routes/deliveryOptions.js';
 import cartItemRoutes from './routes/cartItems.js';
 import orderRoutes from './routes/orders.js';
-import resetRoutes from './routes/reset.js';
 import paymentSummaryRoutes from './routes/paymentSummary.js';
 import fs from 'fs';
 
@@ -28,7 +27,6 @@ app.use('/api/products', productRoutes);
 app.use('/api/delivery-options', deliveryOptionRoutes);
 app.use('/api/cart-items', cartItemRoutes);
 app.use('/api/orders', orderRoutes);
-app.use('/api/reset', resetRoutes);
 app.use('/api/payment-summary', paymentSummaryRoutes);
 
 // Serve static files from the dist folder
