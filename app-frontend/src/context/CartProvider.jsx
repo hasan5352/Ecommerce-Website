@@ -4,16 +4,14 @@ import axios from 'axios';
 export const CartContext = createContext(null);
 
 export default function CartProvider({ children }) {
-  const [cart, setCart] = useState(()=>{
-    const saved = localStorage.getItem("cart");
-    return saved? JSON.parse(saved) : null;
-  });
+  const [cart, setCart] = useState(null);
+
   async function loadCart() {
     let items = await axios.get("/api/cart-items?expand=product");
     setCart(items.data);
-    localStorage.setItem("cart", JSON.stringify(items.data));
     // console.log(items.data);
   }
+
   useEffect(()=>{ if (!cart) loadCart(); }, []);
 
   async function addProductToCartInBackend(productId, quantity){

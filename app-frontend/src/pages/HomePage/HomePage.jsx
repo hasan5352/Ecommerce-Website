@@ -7,19 +7,13 @@ import axios from 'axios';
 export default function HomePage({ Header }){
 	const location = useLocation();
 	let q = (location.search)? location.search : "?all";
-	const savedProducts = localStorage.getItem("products"+q);
 	const [products, setAllProducts] = useState(null);
 
 	async function fetchProducts() {
-		if (savedProducts) {
-			setAllProducts(JSON.parse(savedProducts));
-			return;
-		}
 		let prods = await axios.get(`/api/products/${q}`);
-		console.log(prods.data.length);
 		setAllProducts(prods.data);
-		// if (prods.data.length) localStorage.setItem("products"+q, JSON.stringify(prods.data));
 	}
+	
 	useEffect(()=>{ fetchProducts(); }, [q]);
 
 	if (!products) return;
